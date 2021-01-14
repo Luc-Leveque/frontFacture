@@ -1,7 +1,23 @@
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import PropTypes from 'prop-types'
+
+import { ApolloProvider } from '@apollo/client'
+import { useApollo } from '../lib/apolloClient'
+
+export default function App({ Component, pageProps }) {
+  const apolloClient = useApollo(pageProps.initialApolloState)
+
+  return (
+    <ApolloProvider client={apolloClient}>
+      <div style={{ margin: '20px' }}>
+        <Component {...pageProps} />
+      </div>
+    </ApolloProvider>
+  )
 }
 
-export default MyApp
+App.propTypes = {
+  Component: PropTypes.any,
+  pageProps: PropTypes.any
+}
