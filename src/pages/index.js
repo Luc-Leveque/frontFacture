@@ -1,18 +1,20 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import ClientList from '../components/clientList/index'
+import NavBar from '../components/navBar'
 
 export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Invoice App</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      <NavBar />
 
       <main className={styles.main}>
         <div>
-          <h1 style={{ textAlign: 'center' }}>EPL Players Directory</h1>
+          <h1 style={{ textAlign: 'center' }}>Clients</h1>
           <ClientList />
         </div>
       </main>
