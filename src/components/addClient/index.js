@@ -2,53 +2,22 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
+import { useRouter } from 'next/router'
+import ADD_CLIENT from '../../graphql/ADD_CLIENT'
+import UPDATE_CLIENT from '../../graphql/UPDATE_CLIENT'
+import ALL_CLIENTS_QUERY from '../../graphql/ALL_CLIENTS_QUERY'
 
-const ADD_CLIENT = gql`
-  mutation addClient(
-    $name: String!
-    $siret: String!
-    $address: String!
-    $email: String!
-    $phoneNumber: String!
-    $logo: String!
-  ) {
-    createClient(
-      name: $name
-      siret: $siret
-      address: $address
-      email: $email
-      phoneNumber: $phoneNumber
-      logo: $logo
-    ) {
-      id
-      name
-      siret
-      email
-      phoneNumber
-      logo
-      address
+const AddClient = ({ isPublic = false, client = {} }) => {
+  const [formState, setformState] = useState(
+    client || {
+      name: '',
+      siret: '',
+      address: '',
+      email: '',
+      phoneNumber: ''
     }
-  }
-`
-const ALL_CLIENTS_QUERY = gql`
-  query allClients {
-    getClients {
-      id
-      name
-    }
-  }
-`
-
-const AddClient = ({ isPublic = false }) => {
-  const [formState, setformState] = useState({
-    name: '',
-    siret: '',
-    address: '',
-    email: '',
-    phoneNumber: '',
-    logo: ''
-  })
+  )
 
   const updateCache = (cache, { data }) => {
     // If this is for the public feed, do nothing
@@ -75,8 +44,7 @@ const AddClient = ({ isPublic = false }) => {
       siret: '',
       address: '',
       email: '',
-      phoneNumber: '',
-      logo: ''
+      phoneNumber: ''
     })
   }
 
@@ -85,35 +53,54 @@ const AddClient = ({ isPublic = false }) => {
     onCompleted: resetInput
   })
 
+  const [updateClientById] = useMutation(UPDATE_CLIENT)
+  const router = useRouter()
   return (
     <section>
       <Container
         onSubmit={e => {
           e.preventDefault()
-          addClient({
-            variables: {
-              name: formState.name,
-              siret: formState.siret,
-              address: formState.address,
-              email: formState.email,
-              phoneNumber: formState.phoneNumber,
-              logo: formState.logo
-            },
-            refetchQueries: [{ query: ALL_CLIENTS_QUERY }]
-          })
-          e.target.reset()
+          if (formState.id) {
+            console.log(formState)
+            updateClientById({
+              variables: {
+                idClient: formState.id,
+                name: formState.name,
+                siret: formState.siret,
+                address: formState.address,
+                email: formState.email,
+                phoneNumber: formState.phoneNumber
+              },
+              refetchQueries: [{ query: ALL_CLIENTS_QUERY }]
+            })
+            router.push('/clientPages/listClients')
+          } else {
+            addClient({
+              variables: {
+                name: formState.name,
+                siret: formState.siret,
+                address: formState.address,
+                email: formState.email,
+                phoneNumber: formState.phoneNumber
+              },
+              refetchQueries: [{ query: ALL_CLIENTS_QUERY }]
+            })
+            e.target.reset()
+          }
         }}
       >
         <Input
           type='text'
           placeholder='Nom'
           required='required'
+          value={formState.name}
           onChange={e => setformState({ ...formState, name: e.target.value })}
         />
         <Input
           type='text'
           placeholder='Adresse'
           required='required'
+          value={formState.address}
           onChange={e =>
             setformState({ ...formState, address: e.target.value })
           }
@@ -122,26 +109,24 @@ const AddClient = ({ isPublic = false }) => {
           type='text'
           placeholder='Siret'
           required='required'
+          value={formState.siret}
           onChange={e => setformState({ ...formState, siret: e.target.value })}
         />
         <Input
           type='text'
           placeholder='Email'
           required='required'
+          value={formState.email}
           onChange={e => setformState({ ...formState, email: e.target.value })}
         />
         <Input
           type='text'
           placeholder='N° de Telephone'
           required='required'
+          value={formState.phoneNumber}
           onChange={e =>
             setformState({ ...formState, phoneNumber: e.target.value })
           }
-        />
-        <Input
-          type='text'
-          placeholder='Logo'
-          onChange={e => setformState({ ...formState, logo: e.target.value })}
         />
 
         <Button type='submit' id='submit' value='Post' />
@@ -151,7 +136,8 @@ const AddClient = ({ isPublic = false }) => {
 }
 
 AddClient.propTypes = {
-  isPublic: PropTypes.bool
+  isPublic: PropTypes.bool,
+  client: PropTypes.object
 }
 
 const Input = styled.input`
