@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 import Link from 'next/link'
 import ALL_CLIENTS_QUERY from '../../graphql/ALL_CLIENTS_QUERY'
+import DeleteClient from '../deleteClient'
 
 const ClientList = () => {
   const { loading, error, data } = useQuery(ALL_CLIENTS_QUERY)
@@ -53,6 +54,9 @@ const ClientList = () => {
               >
                 <td> Facture</td>
               </Link>
+              <td>
+                <DeleteClient idClient={client.id} />
+              </td>
             </tr>
           ))}
         </tbody>

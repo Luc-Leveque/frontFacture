@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import styles from '../../../styles/Home.module.css'
 import ClientList from '../../../components/clientList/index'
 import AddClient from '../../../components/addClient/index'

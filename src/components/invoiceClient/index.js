@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client'
-import Link from 'next/link'
 import PropTypes from 'prop-types'
 import CLIENT_INVOICE from '../../graphql/CLIENT_INVOICE'
 
