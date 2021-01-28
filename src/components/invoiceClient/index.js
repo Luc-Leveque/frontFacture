@@ -31,16 +31,18 @@ const InvoiceClient = ({ idClient }) => {
           <tbody>
             {clientInvoiceList.map(invoice => (
               <tr key={invoice.id}>
-                <td>{invoice.description}</td>
-                <td>{invoice.status}</td>
-                <td>{invoice.date}</td>
-                <Link
-                  href={`/invoicePages/addFacture/${encodeURIComponent(
-                    idClient
-                  )}?idInvoice=${encodeURIComponent(invoice.id)}`}
-                >
-                  <Button variant='secondary'>Modifier la facture</Button>
-                </Link>
+                <td className='align-middle'>{invoice.description}</td>
+                <td className='align-middle'>{invoice.status}</td>
+                <td className='align-middle'>{invoice.date}</td>
+                <td className='align-middle'>
+                  <Link
+                    href={`/invoicePages/addFacture/${encodeURIComponent(
+                      idClient
+                    )}?idInvoice=${encodeURIComponent(invoice.id)}`}
+                  >
+                    <Button variant='secondary'>Modifier la facture</Button>
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>

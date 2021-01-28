@@ -74,6 +74,13 @@ const AddInvoice = ({ idClient, invoice = false }) => {
     setformState({ ...formState, inputs: temp })
   }
 
+  const delInput = () => {
+    const temp = formState.inputs
+    temp.pop()
+
+    setformState({ ...formState, inputs: temp })
+  }
+
   const changeTotal = () => {
     let total = 0
     formState.inputs.map(input => (total += input.price * input.qte))
@@ -104,6 +111,7 @@ const AddInvoice = ({ idClient, invoice = false }) => {
             Facture N° #: 123 <br /> Date :{' '}
             <Input
               type='text'
+              id='inputDateInvoice'
               placeholder='Date'
               required='required'
               value={formState.date}
@@ -128,7 +136,7 @@ const AddInvoice = ({ idClient, invoice = false }) => {
             <br /> {user.email}
           </div>
         </div>
-        <table cellPadding='0' cellSpacing='0'>
+        <table id='tableautoTest' cellPadding='0' cellSpacing='0'>
           <tr className='heading'>
             <td>Produit</td>
             <td>Prix à l'unité</td>
@@ -196,6 +204,9 @@ const AddInvoice = ({ idClient, invoice = false }) => {
               <button onClick={() => appendInput()} className='btn-add-row'>
                 Add row
               </button>
+              <button onClick={() => delInput()} className='btn-add-row'>
+                Delete Last row
+              </button>
             </td>
           </tr>
 
@@ -259,7 +270,7 @@ const AddInvoice = ({ idClient, invoice = false }) => {
             }
           }}
         >
-          <Form.Group controlId='formBasicName'>
+          <Form.Group>
             <Form.Label>Status Facture</Form.Label>
             <Form.Control
               type='text'
@@ -272,7 +283,7 @@ const AddInvoice = ({ idClient, invoice = false }) => {
               }
             />
           </Form.Group>
-          <Form.Group controlId='formBasicName'>
+          <Form.Group>
             <Form.Label>Description Facture</Form.Label>
             <Form.Control
               type='text'
@@ -286,9 +297,9 @@ const AddInvoice = ({ idClient, invoice = false }) => {
           </Form.Group>
           <ButtonRow>
             <ButtonForm type='submit' id='submit' value='Valider' />
-            <GeneratePDF html={ref} />
           </ButtonRow>
         </Form>
+        <GeneratePDF formState={formState} user={user} />
       </Container>
     </div>
   )

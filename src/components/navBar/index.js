@@ -7,13 +7,13 @@ import { Nav, Navbar } from 'react-bootstrap'
 const NavBar = () => {
   return (
     <Navbar bg='dark' variant='dark'>
-      <Nav className='mr-auto'>
-        <Nav.Link>
+      <Nav className='mr-auto navInvoice'>
+        <Nav className='eltInvoiceNav'>
           <Link href='/clientPages/listClients'>Répertoire Client</Link>
-        </Nav.Link>
-        <Nav.Link>
+        </Nav>
+        <Nav className='eltInvoiceNav'>
           <Link href='/userPages/user'>User</Link>
-        </Nav.Link>
+        </Nav>
       </Nav>
     </Navbar>
   )

@@ -1,8 +1,7 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/globals.css'
 import '../styles/styles.css'
 import '../styles/invoice.css'
-import 'react-datepicker/dist/react-datepicker.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 import PropTypes from 'prop-types'
 

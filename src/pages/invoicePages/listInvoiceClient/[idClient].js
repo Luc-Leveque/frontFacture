@@ -24,7 +24,7 @@ const ListInvoiceClient = () => {
             <Link
               href={`/invoicePages/addFacture/${encodeURIComponent(idClient)}`}
             >
-              <Button value='coucou'>Ajouter une facture pour ce client</Button>
+              <Button>Ajouter une facture pour ce client</Button>
             </Link>
           </div>
         </main>
