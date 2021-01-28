@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client'
+import Link from 'next/link'
 import PropTypes from 'prop-types'
 import CLIENT_INVOICE from '../../graphql/CLIENT_INVOICE'
+import { Table, Button } from 'react-bootstrap'
 
 const InvoiceClient = ({ idClient }) => {
   const { data, loading, error } = useQuery(CLIENT_INVOICE, {
@@ -18,30 +20,31 @@ const InvoiceClient = ({ idClient }) => {
       {!clientInvoiceList.length ? (
         <div>Aucune facture pour ce client</div>
       ) : (
-        <table>
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th>description</th>
-              <th>pdf</th>
               <th>status</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>
             {clientInvoiceList.map(invoice => (
               <tr key={invoice.id}>
-                <td>
-                  <a>{invoice.description}</a>
-                </td>
-                <td>
-                  <a>{invoice.pdf}</a>
-                </td>
-                <td>
-                  <a>{invoice.status}</a>
-                </td>
+                <td>{invoice.description}</td>
+                <td>{invoice.status}</td>
+                <td>{invoice.date}</td>
+                <Link
+                  href={`/invoicePages/addFacture/${encodeURIComponent(
+                    idClient
+                  )}?idInvoice=${encodeURIComponent(invoice.id)}`}
+                >
+                  <Button variant='secondary'>Modifier la facture</Button>
+                </Link>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
     </div>
   )

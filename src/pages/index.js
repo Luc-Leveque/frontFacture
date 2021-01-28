@@ -5,16 +5,17 @@ import Footer from '../components/footer'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <>
       <Header />
+      <div className={styles.container}>
+        <main className={styles.main}>
+          <div>
+            <ClientList />
+          </div>
+        </main>
 
-      <main className={styles.main}>
-        <div>
-          <ClientList />
-        </div>
-      </main>
-
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   )
 }

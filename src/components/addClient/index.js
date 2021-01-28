@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import { Form, Button, Container } from 'react-bootstrap'
 
 import { useMutation } from '@apollo/client'
 import { useRouter } from 'next/router'
@@ -56,12 +56,11 @@ const AddClient = ({ isPublic = false, client = {} }) => {
   const [updateClientById] = useMutation(UPDATE_CLIENT)
   const router = useRouter()
   return (
-    <section>
-      <Container
+    <Container fluid>
+      <Form
         onSubmit={e => {
           e.preventDefault()
           if (formState.id) {
-            console.log(formState)
             updateClientById({
               variables: {
                 idClient: formState.id,
@@ -89,49 +88,69 @@ const AddClient = ({ isPublic = false, client = {} }) => {
           }
         }}
       >
-        <Input
-          type='text'
-          placeholder='Nom'
-          required='required'
-          value={formState.name}
-          onChange={e => setformState({ ...formState, name: e.target.value })}
-        />
-        <Input
-          type='text'
-          placeholder='Adresse'
-          required='required'
-          value={formState.address}
-          onChange={e =>
-            setformState({ ...formState, address: e.target.value })
-          }
-        />
-        <Input
-          type='text'
-          placeholder='Siret'
-          required='required'
-          value={formState.siret}
-          onChange={e => setformState({ ...formState, siret: e.target.value })}
-        />
-        <Input
-          type='text'
-          placeholder='Email'
-          required='required'
-          value={formState.email}
-          onChange={e => setformState({ ...formState, email: e.target.value })}
-        />
-        <Input
-          type='text'
-          placeholder='N° de Telephone'
-          required='required'
-          value={formState.phoneNumber}
-          onChange={e =>
-            setformState({ ...formState, phoneNumber: e.target.value })
-          }
-        />
-
-        <Button type='submit' id='submit' value='Post' />
-      </Container>
-    </section>
+        <Form.Group controlId='formBasicName'>
+          <Form.Label>Nom Client</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Nom'
+            required='required'
+            value={formState.name}
+            onChange={e => setformState({ ...formState, name: e.target.value })}
+          />
+        </Form.Group>
+        <Form.Group controlId='formBasicAddress'>
+          <Form.Label>Adresse Client</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Adresse'
+            required='required'
+            value={formState.address}
+            onChange={e =>
+              setformState({ ...formState, address: e.target.value })
+            }
+          />
+        </Form.Group>
+        <Form.Group controlId='formBasicSiret'>
+          <Form.Label>Siret Client</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Siret'
+            required='required'
+            value={formState.siret}
+            onChange={e =>
+              setformState({ ...formState, siret: e.target.value })
+            }
+          />
+        </Form.Group>
+        <Form.Group controlId='formBasicEmail'>
+          <Form.Label>Email Client</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Email'
+            required='required'
+            value={formState.email}
+            onChange={e =>
+              setformState({ ...formState, email: e.target.value })
+            }
+          />
+        </Form.Group>
+        <Form.Group controlId='formBasicPhone'>
+          <Form.Label>Numero de Teléphone</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='N° de Telephone'
+            required='required'
+            value={formState.phoneNumber}
+            onChange={e =>
+              setformState({ ...formState, phoneNumber: e.target.value })
+            }
+          />
+        </Form.Group>
+        <Button variant='primary' type='submit' id='submit' value='Post'>
+          Valider
+        </Button>
+      </Form>
+    </Container>
   )
 }
 
@@ -139,28 +158,5 @@ AddClient.propTypes = {
   isPublic: PropTypes.bool,
   client: PropTypes.object
 }
-
-const Input = styled.input`
-  font-size: 18px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  padding-left: 35px;
-  background: white;
-`
-
-const Button = styled.input`
-  color: palevioletred;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-`
-
-const Container = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`
 
 export default AddClient

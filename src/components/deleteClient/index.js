@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { Button } from 'react-bootstrap'
 
 import DELETE_CLIENT from '../../graphql/DELETE_CLIENT'
+import ALL_CLIENTS_QUERY from '../../graphql/ALL_CLIENTS_QUERY'
 import { useMutation } from '@apollo/client'
 
 const DeleteClient = ({ idClient }) => {
@@ -12,14 +14,18 @@ const DeleteClient = ({ idClient }) => {
     <section>
       <Container>
         <Button
+          variant='warning'
           onClick={() => {
             deleteClientById({
               variables: {
                 idClient: idClient
-              }
+              },
+              refetchQueries: [{ query: ALL_CLIENTS_QUERY }]
             })
           }}
-        />
+        >
+          Supprimer le client
+        </Button>
       </Container>
     </section>
   )
@@ -29,16 +35,7 @@ DeleteClient.propTypes = {
   idClient: PropTypes.string
 }
 
-const Button = styled.button`
-  color: palevioletred;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-`
-
-const Container = styled.form`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

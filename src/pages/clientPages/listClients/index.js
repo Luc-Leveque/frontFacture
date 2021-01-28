@@ -6,18 +6,18 @@ import Footer from '../../../components/footer'
 
 const ListClients = () => {
   return (
-    <div className={styles.container}>
+    <>
       <Header />
-
-      <main className={styles.main}>
-        <div>
+      <div className={styles.container}>
+        <main className={styles.main}>
           <ClientList />
-        </div>
-        <AddClient />
-      </main>
 
-      <Footer />
-    </div>
+          <AddClient />
+        </main>
+
+        <Footer />
+      </div>
+    </>
   )
 }
 
