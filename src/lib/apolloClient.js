@@ -4,6 +4,10 @@ import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
 let apolloClient
 
 function createApolloClient() {
+  console.log(
+    '🚀 ~ file: apolloClient.js ~ line 12 ~ createApolloClient ~ process.env.API_URL',
+    process.env.API_URL
+  )
   return new ApolloClient({
     ssrMode: typeof window === 'undefined', // set to true for SSR
     link: new HttpLink({
