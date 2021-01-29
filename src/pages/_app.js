@@ -10,11 +10,17 @@ import 'normalize.css'
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../../lib/apolloClient'
 
+import { ApolloClient, InMemoryCache } from '@apollo/client'
+
 export default function App({ Component, pageProps }) {
-  const apolloClient = useApollo(pageProps.initialApolloState)
+  // const apolloClient = useApollo(pageProps.initialApolloState)
+  const client = new ApolloClient({
+    uri: process.env.API_URL,
+    cache: new InMemoryCache()
+  })
 
   return (
-    <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={client}>
       <div>
         <Component {...pageProps} />
       </div>
