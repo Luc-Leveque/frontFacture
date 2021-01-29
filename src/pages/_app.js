@@ -15,7 +15,7 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 export default function App({ Component, pageProps }) {
   // const apolloClient = useApollo(pageProps.initialApolloState)
   const client = new ApolloClient({
-    uri: process.env.API_URL,
+    uri: 'https://apollo-invoice.herokuapp.com/graphql',
     cache: new InMemoryCache()
   })
 
